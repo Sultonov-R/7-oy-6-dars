@@ -9,17 +9,22 @@ function App() {
   const [isWork, serIsWork] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  const [workMinute, setWorkMinute] = useState(25);
+  const [workMinute, setWorkMinute] = useState(1);
 
   useEffect(() => {
     let interval;
     if (isActive){
       interval = setInterval( () => {
         if(second == 0){
-          setMinut((minut)=minut-1) 
+          setMinut(minut-1) 
           setSecond(59)
         }else{
           setSecond(second - 1)
+        }
+        if(second==0 && minut==0){
+          setIsActive(false)
+          setMinut(workMinute)
+          setSecond(second)
         }
         
       },1000)
@@ -33,7 +38,7 @@ function App() {
   function timeFormat() {
     let str = '';
     if (minut < 10) {
-      str += '0' + minut + ":";
+      str = '0' + minut + ":";
     } else {
       str = minut + ":";
     }
@@ -41,14 +46,14 @@ function App() {
     if (second < 10) {
       str += '0' + second;
     } else {
-      str = second;
+      str += second;
     }
     return str;
   }
   function handleStart() {
     setMinut(workMinute);
     setSecond(0);
-    setActive(true);
+    setIsActive(true);
   }
 
   function handleStop() {
